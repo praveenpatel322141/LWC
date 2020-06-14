@@ -1,0 +1,19 @@
+<apex:page controller="ControlerMyDataTable" renderAs="PDF">
+
+<apex:pageBlock >
+
+<apex:pageBlockTable value="{!myAccountList}" var="myAccount" style="border-spacing: 20px">
+
+<apex:column value="{!myAccount.AccountNumber}"/>
+
+<apex:column value="{!myAccount.name}"/>
+
+<apex:column value="{!myAccount.Type}"/>
+
+<apex:column value="{!myAccount.Industry}"/>
+
+</apex:pageBlockTable>
+
+</apex:pageBlock>
+
+</apex:page>

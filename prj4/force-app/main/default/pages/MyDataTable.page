@@ -1,0 +1,36 @@
+<apex:page controller="ControlerMyDataTable" >
+
+<hr/>
+<apex:form >
+
+<p>Click here to Export to PDF</p>
+
+<apex:commandButton action="{!exportToPDF}" value="Export to PDF" id="ExportPDF"/>
+
+</apex:form>
+<apex:pageBlock title="My data table">
+
+<apex:pageBlockTable value="{!myAccountList}" var="myAccount" >
+
+<apex:column value="{!myAccount.AccountNumber}"/>
+
+<apex:column value="{!myAccount.name}"/>
+
+<apex:column value="{!myAccount.Type}"/>
+
+<apex:column value="{!myAccount.Industry}"/>
+
+</apex:pageBlockTable>
+
+</apex:pageBlock>
+
+<hr/>
+<apex:form >
+
+<p>Click here to Export to Excel</p>
+
+<apex:commandButton action="{!exportToExcel}" value="Export to Excel" id="ExportExcel"/>
+
+</apex:form>
+
+</apex:page>

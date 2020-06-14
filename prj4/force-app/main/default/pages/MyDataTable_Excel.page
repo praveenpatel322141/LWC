@@ -1,0 +1,25 @@
+<apex:page controller="ControlerMyDataTable" contentType="application/vnd.ms-excel#SalesForceExport.xls" cache="true">
+
+<head>
+
+<meta http-equiv="Content-Type" content="text/HTML;charset=UTF-8" />
+
+</head>
+
+<apex:pageBlock title="My data table">
+
+<apex:pageBlockTable value="{!myAccountList}" var="myAccount">
+
+<apex:column value="{!myAccount.AccountNumber}"/>
+
+<apex:column value="{!myAccount.name}"/>
+
+<apex:column value="{!myAccount.Type}"/>
+
+<apex:column value="{!myAccount.Industry}"/>
+
+</apex:pageBlockTable>
+
+</apex:pageBlock>
+
+</apex:page>
