@@ -1,0 +1,25 @@
+<apex:page title="Salesforce SOQL Offset Example Using Visualforce" StandardController="Account" extensions="dynamic_visualforce_with_soql_offset2" showHeader="false" sidebar="false" readOnly="true" cache="false" tabStyle="Contact">
+<apex:sectionHeader subtitle="Contacts" title="Square Root Table"/>
+    
+<apex:form >
+<apex:pageBlock >   
+    
+    <apex:actionFunction action="{!refreshGrid}" name="queryByPage" reRender="myPanel,myButtons" >
+        <apex:param name="firstParam" assignTo="{!selectedPage}" value="" />
+    </apex:actionFunction>
+    
+    <apex:dynamicComponent componentValue="{!myCommandButtons}"/>        
+    
+    <apex:pageBlockSection title="Cointacts (Total List Size: {!total_size})" collapsible="false" >
+    <apex:outputPanel id="myPanel">
+    <apex:pageMessages id="theMessages" />
+    <apex:pageBlockTable value="{!contacts}" var="n" align="center">
+        <apex:column value="{!n.Name}" />
+        <apex:column value="{!n.Email}" />
+        <apex:facet name="footer">Showing Page # {!pageNumber} of {!totalPages}</apex:facet>
+    </apex:pageBlockTable>
+    </apex:outputPanel>
+    </apex:pageBlockSection>    
+</apex:pageBlock>
+</apex:form>
+</apex:page>

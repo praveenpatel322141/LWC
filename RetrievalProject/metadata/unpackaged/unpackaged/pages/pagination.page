@@ -1,0 +1,34 @@
+<apex:page StandardController="Account" extensions="paginationclass" showHeader="true" sidebar="false">
+    <apex:form >
+    <apex:actionFunction name="change" action="{!change}"/>
+    <apex:selectList value="{!selected}" size="1" onchange="change()">
+        <apex:selectOptions value="{!lst}"/>
+    </apex:SelectList>
+   
+        <apex:pageBlock title="Contact Pagination" id="pb" rendered="{!conlst}"><apex:outputLabel style="font-size:15px; font-weight:bold;">{!aname.name} has {!count} contacts </apex:outputLabel>
+            <apex:pageBlockTable title="Accounts" value="{!lstacc}" var="a">
+                <apex:column headerValue="Name">
+                    <apex:commandLink value="{!a.lastname}"/>
+                </apex:column>
+            </apex:pageBlockTable>
+            <br/><br/>
+        <div>
+               <apex:panelGroup >
+                <apex:commandLink action="{!First}" reRender="pb" >             
+                       <!--<apex:image value="{!$Resource.First}" height="20px" width="60px" title="First" />-->First
+                </apex:commandLink>&nbsp;&nbsp;&nbsp;&nbsp;
+                <apex:commandLink action="{!Previous}" reRender="pb" rendered="{!hasPrevious}">             
+                       <!--<apex:image value="{!$Resource.Previous}" height="20px" width="40px" title="Previous" rendered="{!hasPrevious}"/>-->Previous
+                </apex:commandLink>&nbsp;&nbsp;&nbsp;&nbsp;
+                <apex:outputLabel style="font-size:12px; margin-bottom:0px;" > Page No#&nbsp;{!pageno} </apex:outputLabel>&nbsp;&nbsp;&nbsp;&nbsp;
+                <apex:commandLink action="{!Next}" reRender="pb" rendered="{!hasNext}">             
+                       <!--<apex:image value="{!$Resource.Next}" height="20px" width="40px" title="Next" rendered="{!hasNext}"/>-->Next
+                </apex:commandLink>&nbsp;&nbsp;&nbsp;&nbsp;
+                <apex:commandLink action="{!Last}" reRender="pb" >             
+                       <!--<apex:image value="{!$Resource.Last}" height="20px" width="60px" title="Last" />-->Last
+                </apex:commandLink>&nbsp;&nbsp;&nbsp;&nbsp;
+                </apex:panelGroup>
+               </div>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

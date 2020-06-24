@@ -1,0 +1,28 @@
+<apex:page docType="html-5.0" >
+<!--<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<apex:includeScript value="{!$Resource.forcetk}" />-->
+<apex:includeScript value="{!URLFOR($Resource.static, 'jquery.js')}" />
+<apex:includeScript value="{!URLFOR($Resource.static, 'forcetk.js')}"  />
+<apex:includeScript value="https://www.google.com/jsapi" />
+<script type="text/javascript">alert('Hi');
+$(document).ready(function(){
+    var reportId = '{!$CurrentPage.parameters.reportId}';
+    alert('Hi1'+reportId);
+    if (reportId) {
+      alert('Hi1-');
+      var client = new forcetk.Client();
+      client.setSessionToken('{!$Api.Session_ID}');
+      var report = null;
+      client.query("SELECT Name FROM Account LIMIT 1", function(response){
+            alert(response.records[0].Name);
+      });
+      client.ajax("/v29.0/analytics/reports/"+reportId+"?includeDetails=true", function(response){
+          report = response;
+          $("#output").text(JSON.stringify(report, null, ' '));
+      });
+      alert('Hi2');
+    }
+}
+);
+</script>
+</apex:page>

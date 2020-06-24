@@ -1,0 +1,23 @@
+<apex:page Controller="ContactCustomController" >
+<apex:pageBlock title="contact List">
+<apex:form >
+<apex:pageBlockTable value="{!contacts}" var="con">
+<apex:column headerValue=" Name" value="{!con.Name}"/>
+
+<apex:column headerValue="Select">
+<input type="radio" name="selectRadio" id="radio">
+<apex:actionSupport event="onclick" action="{!goToEdit}" ><br/> <apex:param name="id" value="{!con.id}"/>
+</apex:actionSupport>
+</input>
+
+</apex:column>
+</apex:pageBlockTable>
+</apex:form>
+
+<apex:pageBlockButtons >
+<apex:form >
+<apex:commandButton value=" Go to edit page" action="{!goToEdit}"/>
+</apex:form>
+</apex:pageBlockButtons>
+</apex:pageBlock>
+</apex:page>

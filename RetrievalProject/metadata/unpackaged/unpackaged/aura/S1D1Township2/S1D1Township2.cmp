@@ -1,0 +1,5 @@
+<aura:component >
+	<p>This is the text from State 1 District 1 Township 2 Level</p>
+    <aura:registerEvent name="LowPriorityComplaintFromTownship1" type="c:CompentEventWithComplainMessage"/>
+    <lightning:button label="Submit My Complaints" aura:id="LPB" name="LPComplaintB" onClick="{!c.forwardComplaint}" />	
+</aura:component>

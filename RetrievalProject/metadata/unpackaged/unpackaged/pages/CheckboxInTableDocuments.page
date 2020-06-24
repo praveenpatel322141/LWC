@@ -1,0 +1,35 @@
+<apex:page standardController="SSP_Document__c" extensions="DocumentsClass" Tabstyle="SSP_Document__c">
+    <apex:form >
+        <apex:pageBlock Title="SSP Documents with CheckBoxes">
+            <apex:pageBlockSection Title="List of Available SSP Documents">
+                <apex:pageBlockTable value="{!sspDocuments}" var="d" columnswidth="50px,50px" cellpadding="4" border="1">
+                    <apex:column headerValue="Share" title="">Share &nbsp;&nbsp;&nbsp;&nbsp;
+                        <apex:facet name="header"> <apex:inputCheckbox label="Share" title="Share" >
+                            <apex:outputLabel >Share All</apex:outputLabel>
+                            <apex:actionSupport event="onclick" action="{!GetSelected}" onsubmit="checkAll(this)" rerender="Selected_PBS"/>
+                            </apex:inputCheckbox>
+                        </apex:facet>
+                        <apex:inputCheckbox value="{!d.selected}" id="checkedone">
+                        <apex:actionSupport event="onclick" action="{!GetSelected}" rerender="Selected_PBS"/></apex:inputCheckbox>
+                    </apex:column>
+                    <apex:column headervalue="SSP Document Name" value="{!d.doc.Name}" />
+                </apex:pageBlockTable>
+            </apex:pageBlockSection>
+
+            <apex:pageBlockSection Title="Selected SSP Documents" id="Selected_PBS">
+                <apex:pageBlockTable value="{!selectedSSPDocuments}" var="s" columnswidth="50px,50px" cellpadding="4" border="1">
+                    <apex:column headervalue="Document Name" value="{!s.Name}" />
+                </apex:pageBlockTable>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+    <script>
+        function checkAll(cb) {
+            var inputElem = document.getElementsByTagName("input");
+            for(var i=0; i<inputElem.length; i++) {
+                if(inputElem[i].id.indexOf("checkedone")!=-1)
+                inputElem[i].checked = cb.checked;
+            }
+        }
+    </script>
+</apex:page>

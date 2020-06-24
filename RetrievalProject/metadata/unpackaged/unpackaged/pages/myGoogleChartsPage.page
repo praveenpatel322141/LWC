@@ -1,0 +1,45 @@
+<apex:page controller="AccountChartController">
+    <!--Google Chart Javascript Resource-->
+    <script type="text/javascript" 
+    src="<a class='vglnk' href='https://www.gstatic.com/charts/loader.js'/" 
+    rel="nofollow"></script>
+    <!--Javascript Remote Function To Call Apex Controller Method-->
+        <script type='text/javascript'>
+            alert('0');
+            google.charts.load('current', {packages: ['corechart']});
+            alert('1');
+    google.charts.setOnLoadCallback(drawChart);
+     
+    var accData; //Variable to store data
+    //Call remote action method
+    AccountChartController.getAccountData(function(result, event){
+        accData  = result; //get data from apex controller
+    },{escape:true});
+     
+    //Draw google chart
+    function drawChart() {
+        //Create the data table.
+        var data = new google.visualization.DataTable();
+        //Add datatable columns
+        data.addColumn('string', 'Country');
+        data.addColumn('number', 'Number of Accounts');
+         
+        //Add datatable rows
+        for(i = 0; i< accData.length; i++){
+            data.addRow([accData[i].Country, accData[i].NumberOfAccounts]);
+        }
+         
+        //Set chart options
+        var options = {
+            'title':'Accounts Group by Country',
+            is3D: true,};
+         
+        //Instantiate and draw the chart.
+        var chart = new google.visualization.PieChart(document.getElementById('myPieChart'));
+        chart.draw(data, options);
+    }
+    </script>
+     
+    <!--Identify where the chart should be drawn-->
+    <div id='myPieChart' style='width: 900px; height: 700px;'/>
+</apex:page>

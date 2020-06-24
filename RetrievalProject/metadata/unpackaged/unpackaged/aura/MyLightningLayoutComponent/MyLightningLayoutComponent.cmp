@@ -1,0 +1,19 @@
+<aura:component controller="DisplayRecordsInEditViewMode" >
+    <aura:attribute name="accData" type="Object" />
+    <aura:attribute name="accColumns" type="List" />
+    <aura:attribute name="recId" type="Id" />
+    <aura:attribute name="flag" type="Boolean" default="false" />
+    <aura:attribute name="myMode" type="String" />
+    <aura:attribute name="accFields" type="String[]"
+                    default="['Name','Description']"/>
+    <div class="c-container">
+        <lightning:layout multipleRows="true">
+            <lightning:layoutItem size="12"  mediumDeviceSize="6" largeDeviceSize="4">
+                <div class="custom-box">4</div>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12"  mediumDeviceSize="6"  largeDeviceSize="4">
+                <div class="custom-box">5</div>
+            </lightning:layoutItem>
+        </lightning:layout>
+    </div>
+</aura:component>

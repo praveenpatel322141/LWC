@@ -1,0 +1,10 @@
+<aura:component >
+	<p>This is the text from District 1 Level</p>
+    <aura:handler name="LowPriorityComplaintFromTownship1" event="c:CompentEventWithComplainMessage" action="{!c.handlingLowPComplaints}" phase="Capture" />
+    <p>
+    <c:S1D1Township1></c:S1D1Township1>
+    </p>
+    <p>
+    <c:S1D1Township2></c:S1D1Township2>
+    </p>
+</aura:component>

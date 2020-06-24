@@ -1,0 +1,115 @@
+<apex:page controller="GoogleChartOpportunity" sidebar="false" showHeader="false">
+   
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+   
+    <script type='text/javascript'>
+        google.load('visualization', '1', {packages:['corechart']});
+    </script>
+     
+    <script>
+        function drawOpportunityVisualization(){
+            //Preparing the array for which colors we need to display on chart.
+            var oppByStageolorSet = new Array();
+            var tmp = '{!opportunityByStageColors}';
+            for ( var i = 0; i < tmp.split(',').length; i++ ) {
+                oppByStageolorSet.push(tmp.split(',')[i]);
+               
+            }
+               
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Stage Name');
+            data.addColumn('number', 'Record Count');
+           
+            var oppStages = '{!opportunitiesByStage}'
+            for(var i=0; i<oppStages.split('~').length;i++){
+                var stageName = oppStages.split('~')[i].split('#')[0];
+                var recCount = oppStages.split('~')[i].split('#')[1];
+                data.addRow([stageName,parseInt(recCount)]);
+            }
+           
+            var visualization = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+               
+            var options = {
+                title: 'OPPORTUNITIES BY STAGE',
+                backgroundColor:'#F2F7FB',
+                colors: oppByStageolorSet,
+                legend:{position: 'none'},
+                width: 500,
+                height: 400
+            };
+            visualization.draw(data, options);
+            google.visualization.events.addListener(visualization, 'select', function(){
+                var selectedStageName = data.getValue(visualization.getSelection()[0].row, 0);
+            });
+        }
+       
+        function drawOpportunityAmountByStage(){
+           
+            //Preparing the array for which colors we need to display on chart.
+           
+            var oppAmountByStageolorSet = new Array();
+            var tmp1 = '{!opportunityAmountByStageColors}';
+            for ( var i = 0; i < tmp1.split(',').length; i++ ) {
+                oppAmountByStageolorSet.push(tmp1.split(',')[i]);
+               
+            }
+           
+            var data = new google.visualization.DataTable();
+           
+            data.addColumn('string','Stage Name');
+            data.addColumn('number','Total Amount');
+            var Amount = '{!opportunityAmountByStage}';
+            for(var j=0; j<Amount.split('~').length; j++){
+               
+                var stageName = Amount.split('~')[j].split('#')[0];
+                var AmountTotal = parseFloat(Amount.split('~')[j].split('#')[1]);
+               
+                data.addRow([stageName,AmountTotal]);
+            }
+           
+            var formatter = new google.visualization.NumberFormat(
+                 {negativeColor: 'red', negativeParens: true, pattern: '$###,###'});
+                formatter.format(data, 1);
+           
+            var visualization = new google.visualization.PieChart(document.getElementById('AmountChartDiv'));
+           
+            var options = {
+                title: 'ESTIMATED AMOUNT',
+                backgroundColor:'#F2F7FB',
+                pieSliceText: 'value',
+                pieHole: 0.4,
+                width: 500,
+                height: 400,
+                colors: oppAmountByStageolorSet
+            };
+            visualization.draw(data, options);
+            google.visualization.events.addListener(visualization, 'select', function(){
+                var selectedStageName = data.getValue(visualization.getSelection()[0].row, 0);
+            });
+        }
+       
+        function showOpportunityCharts(){
+            drawOpportunityVisualization();
+            drawOpportunityAmountByStage();
+        }
+    </script>
+    <style>
+          a.active {
+            background-color: #25A6DF;
+          }
+    </style>
+    <apex:form >
+        <apex:outputPanel >
+            <script>
+                google.setOnLoadCallback(showOpportunityCharts);
+            </script>
+            <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td width="50%" style="padding-left:15%; padding-top:0%"><div id='chart_div' style="height: 300px; width: 400px;"/></td>
+                    <td width="50%" style="padding-top:1%"><div id='AmountChartDiv' style="height: 300px; width: 400px;"/></td>
+                </tr>
+            </table>
+        </apex:outputPanel>  
+    </apex:form>
+
+</apex:page>

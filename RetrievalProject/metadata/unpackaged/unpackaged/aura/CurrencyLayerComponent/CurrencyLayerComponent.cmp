@@ -1,0 +1,65 @@
+<aura:component controller="CurrencyLayer">
+    
+   <!--Declare Attributes-->  
+    <aura:attribute name="response" type="Map"/>
+    <aura:attribute name="ListOfCurrency" type="String[]"/>
+    <aura:handler name="init" value="{! this }" action="{! c.initialize }"/>
+    <aura:attribute name="objInfo" type="account" default="{sobjectType : 'Currency__c'}" />
+	<aura:attribute name="listSkillsOptions" type="List" default="[]"/>
+    <aura:attribute name="selectedSkillsItems" type="List" default="[]"/>
+    <aura:attribute name="picklistValues" type="Object" />
+
+    
+    <c:PicklistValues sObjectName="Currency__c" fieldName="CurrencyType__c" picklistValues="{!v.picklistValues}" />
+    
+    <lightning:layoutItem flexibility="auto" padding="around-small">
+    <div class="custom-box">
+        <lightning:select value="{!v.Currency__c.CurrencyType__c}">       
+            <option value="">Choose one...</option>
+            <aura:iteration items="{!v.picklistValues}" var="item">
+                <option value="{!item.value}">
+                    {!item}
+                </option>
+            </aura:iteration>
+        </lightning:select>
+    </div>
+    </lightning:layoutItem> 
+    
+    <div class="slds-m-around--medium">
+        <!--Header part-->
+        <div class="slds-page-header" role="banner">
+            <div class="slds-media__body">
+                <p class="slds-page-header__title slds-truncate" title="Currency Exchange Rates">Foreign Curency Exchange Rates By HTTP Callouts</p>
+                <lightning:button variant="brand" label="Get updated currency rate" onclick="{! c.calloutCtrl }" />             
+            </div>
+        </div>
+        <!--Header part close-->
+        <!--<h3 class="slds-section-title-divider"> Terms and Conditions: {!v.response.terms}</h3>
+        <h3 class="slds-section-title-divider"> Privacy Policies : {!v.response.privacy}</h3>
+        <h3 class="slds-section-title-divider"> Currency Rate Date Time : {!v.response.timestamp}</h3>
+        <h3 class="slds-section-title-divider"> Source Currency : {!v.response.source}</h3>
+        <h3 class="slds-section-title-divider"> Required exchange rate values for currencies: {!v.response.currencies}</h3>-->
+        <!--iterate the list of Currency-->  
+        <!-- Dual List Box start-->
+        <!--init handler event call "initialize" function on component load
+        and fetch picklist values-->
+    
+  
+   <!-- lightning dualListbox component -->
+    <lightning:dualListbox aura:id="selectOptions"
+                           name="Skills"
+                           label= "Select Currencties" 
+                           sourceLabel="Available Options" 
+                           selectedLabel="Selected Options" 
+                           options="{! v.listSkillsOptions }"
+                           value="{! v.selectedSkillsItems }"
+                           onchange="{! c.handleChange }"/>
+    <br/>
+        <!-- Dual List Box end-->
+        <ul class="slds-list--dotted">
+            <aura:iteration items="{!v.ListOfCurrency}" var="quoteLst">
+                <li>{!quoteLst}</li>
+            </aura:iteration>
+        </ul>
+    </div>
+</aura:component>

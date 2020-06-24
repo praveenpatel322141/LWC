@@ -1,0 +1,4 @@
+<aura:component >
+	<p>This is the text from State 1 District 1 Township 1 Level</p>
+    <aura:registerEvent name="LowPriorityComplainFromTownShip1" type="c:CompentEventWithComplainMessage" />
+</aura:component>

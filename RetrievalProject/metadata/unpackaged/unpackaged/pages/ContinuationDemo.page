@@ -1,0 +1,104 @@
+<apex:page controller="ContinuationDemoController" standardStylesheets="false" sidebar="false" showHeader="false"
+ title="Continuation Server Demo">
+ <!-- <apex:slds /> -->
+ <apex:stylesheet value="{!URLFOR($Resource.SLDS2_3_1, 'assets/styles/salesforce-lightning-design-system.min.css')}" /> 
+ <div class="slds slds-box">
+ <div class=" slds-m-top_xx-large slds-m-bottom_xx-large slds-m-left_xx-large slds-m-right_xx-large"> 
+ <apex:form > 
+ Total API calls to make : <input type="text" value="3" placeholder="Total API calls to make, Default 3" id="txtAPICallsToMake" />
+ <input value="Start Request" type="button" onclick="startRequest()"/> 
+ 
+ <apex:actionFunction name="submitAPI" action="{!startRequest}" reRender="panel" oncomplete="apiComplete()"> 
+ <apex:param name="apiCount" assignTo="{!apiCount}" value="" /> 
+ <apex:param name="callBackHandlerName" assignTo="{!callBackHandlerName}" value="" /> 
+ </apex:actionFunction> 
+ 
+ <br /> <br />
+ 
+ 
+ <apex:outputPanel id="panel"> 
+ <apex:outputText value="{!result}" escape="false" /> 
+ </apex:outputPanel> 
+ </apex:form>
+ </div> 
+ 
+ <div id="modalWindowMsg" style="height:640px;" class="hide">
+ <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-describedby="modal-content" class="slds-modal slds-fade-in-open">
+ <div class="slds-modal__container">
+ <header class="slds-modal__header"> 
+ <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">API Callout status</h2>
+ </header>
+ <div class="slds-modal__content slds-p-around_medium" id="modal-content" >
+ <p>
+ <span id="modal-content-status"> Callout is in progress</span>
+ </p> 
+ <p>
+ <div class="demo-only" style="height:3rem;">
+ <div role="status" class="slds-spinner slds-spinner_medium">
+ <span class="slds-assistive-text">Loading</span>
+ <div class="slds-spinner__dot-a"></div>
+ <div class="slds-spinner__dot-b"></div>
+ </div>
+ </div>
+ </p> 
+ </div>
+ <footer class="slds-modal__footer">
+ <button class="slds-button slds-button_neutral" onclick="cancelModal()">Cancel</button> 
+ </footer>
+ </div>
+ </section>
+ <div id="modalWindowOverlay" class="slds-backdrop slds-backdrop_open"></div>
+ </div> 
+
+ </div>
+ 
+ <style>
+ .modal{
+ visibility: visible !important;
+ opacity: 1 !important;
+ transition: opacity 0.4s linear;
+ }
+ .hide{
+ display:none;
+ }
+ #modal-content{
+ padding: 1rem;
+ }
+ </style>
+ 
+ <script>
+ var calloutNum = 1 ;
+ var totalCallout = 4;
+
+ function openModal(){
+ document.getElementById("modalWindowOverlay").classList.add('modal');
+ document.getElementById("modalWindowMsg").classList.remove('hide'); 
+ }
+ function cancelModal(){ 
+ document.getElementById("modalWindowOverlay").classList.remove('modal');
+ document.getElementById("modalWindowMsg").classList.add('hide');
+ calloutNum = totalCallout+1;
+ }
+ function startRequest(){ 
+ openModal();
+ var callnumbers = document.getElementById("txtAPICallsToMake").value;
+ if(callnumbers){
+ totalCallout = callnumbers;
+ }
+ 
+ document.getElementById("modal-content-status").innerHTML = 'Callout request started for API - '+calloutNum; 
+ submitAPI(calloutNum,'callout1Response');
+ }
+ 
+ function apiComplete(){
+ if(calloutNum < totalCallout){
+ calloutNum++;
+ document.getElementById("modal-content-status").innerHTML = 'Callout request started for API - '+calloutNum; 
+ submitAPI(calloutNum,'callout1Response');
+ }else{
+ document.getElementById("modalWindowOverlay").classList.remove('modal');
+ document.getElementById("modalWindowMsg").classList.add('hide'); 
+ }
+ }
+ </script>
+</apex:page>

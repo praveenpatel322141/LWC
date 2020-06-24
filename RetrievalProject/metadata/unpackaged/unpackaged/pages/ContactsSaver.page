@@ -1,0 +1,28 @@
+<apex:page controller="AccountContactController">
+  <apex:form >
+      <apex:pageBlock >
+        <apex:pageblocksection columns="2">
+        <apex:inputField value="{!acc.name}"/>
+
+    </apex:pageblocksection>      
+    <apex:pageBlockSection columns="1">
+        <apex:pageBlockTable value="{!cont}" var="contacts">
+            <apex:column headerValue="First Name">
+                <apex:inputField value="{!contacts.firstname}"/>
+            </apex:column>
+            <apex:column headerValue="Last Name">
+                <apex:inputField value="{!contacts.lastname}"/>
+            </apex:column>
+            <apex:column headerValue="Email">
+                <apex:inputField value="{!contacts.email}"/>
+            </apex:column>
+        </apex:pageBlockTable>
+    </apex:pageBlockSection>
+   <apex:pageBlockButtons >
+    <apex:commandButton value="Save" action="{!save}"/>
+    <apex:commandButton value="Add Row" action="{!AddRow}" immediate="true"/>
+    </apex:pageBlockButtons>
+
+  </apex:pageBlock> 
+  </apex:form>
+ </apex:page>
